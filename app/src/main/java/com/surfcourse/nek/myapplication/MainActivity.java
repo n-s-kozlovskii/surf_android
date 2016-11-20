@@ -1,9 +1,11 @@
 package com.surfcourse.nek.myapplication;
 
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+
+import interfaces.OnCustomViewClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,9 +17,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(tag, "onCreate");
-        if (savedInstanceState != null && savedInstanceState.containsKey("key")){
-            Log.d(tag, savedInstanceState.getString("key"));
-        }
+        final TextView textView = (TextView) findViewById(R.id.activity_main_text_view);
+        final CounterView  counterView = (CounterView) findViewById(R.id.counter_view);
+        counterView.setOnClickListener(new OnCustomViewClickListener(){
+            @Override
+            public void onClick() {
+                textView.setText(String.valueOf(counterView.getValue()));
+            }
+        });
+
     }
 
     @Override
@@ -61,4 +69,5 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putString("key", "sfd!");
     }
+
 }
